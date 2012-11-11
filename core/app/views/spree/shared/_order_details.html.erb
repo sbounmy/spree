@@ -28,15 +28,15 @@
   <div class="columns omega four">
     <h6><%= t(:payment_information) %> <%= link_to "(#{t(:edit)})", checkout_state_path(:payment) unless @order.completed? %></h6>
     <div class="payment-info">
-      <% unless order.credit_cards.empty? %>
+      <% if credit_card = order.credit_cards.where("cc_type IS NOT NULL").first %>
         <span class="cc-type">
-          <%= image_tag "credit_cards/icons/#{order.credit_cards.first.cc_type}.png" %>
-          <%= t(:ending_in)%> <%= order.credit_cards.first.last_digits %>
+          <%= image_tag "credit_cards/icons/#{credit_card}.png" %>
+          <%= t(:ending_in)%> <%= credit_card.last_digits %>
         </span>
         <br />
         <span class="full-name">
-          <%= order.credit_cards.first.first_name %>
-          <%= order.credit_cards.first.last_name %>
+          <%= credit_card.first_name %>
+          <%= credit_card.last_name %>
         </span>
       <% end %>
     </div>
